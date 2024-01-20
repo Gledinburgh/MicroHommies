@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 2017f5d901b517943a5bbbe3e9d924e9
+  - enabled: 1
+    path: Assets/Scenes/Microgame1.unity
+    guid: e58d9fcb62fa7cf4387869fe4ac5dcd0
+  - enabled: 1
+    path: Assets/Scenes/Microgame2.unity
+    guid: fc6a970716e321a4eb115f101162b13a
+  - enabled: 1
+    path: Assets/Scenes/PersistentUi.unity
+    guid: 862a8f1a097a21041a925a6917de87dc
+  m_configObjects: {}
