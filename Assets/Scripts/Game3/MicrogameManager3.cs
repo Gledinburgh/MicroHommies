@@ -9,9 +9,10 @@ public class MicrogameManager3 : MonoBehaviour
     private CountDownManager countDownManager;
     private AngleControl angleControl;
     private RemoveLid removeLid;
-    private MoveInOut moveInOut;
+    private CopperAnimation copperAnimation;
 
     private WindowAnimation windowAnimation;
+    private WindowLights windowLights;
    
 
     public bool isWin;
@@ -28,15 +29,16 @@ public class MicrogameManager3 : MonoBehaviour
         countDownManager = FindObjectOfType<CountDownManager>();
         angleControl = FindObjectOfType<AngleControl>();
         removeLid = FindObjectOfType<RemoveLid>();
-        moveInOut = FindObjectOfType<MoveInOut>();
+        copperAnimation = FindObjectOfType<CopperAnimation>();
         windowAnimation = FindObjectOfType<WindowAnimation>();
+        windowLights = FindObjectOfType<WindowLights>();
         angleControl.isActive = true;
         countDownManager.isActive = true;
-        moveInOut.isActive = false;
+        copperAnimation.isActive = false;
         removeLid.isActive = false;
         windowAnimation.isActive = false;
 
-        if (timerManager != null)
+        if (timerManager != null && !isWin)
         {
            timerManager.OnTimerExpired.AddListener(Lose);
         }
@@ -69,8 +71,9 @@ public class MicrogameManager3 : MonoBehaviour
             angleControl.isActive = false;
             isWin = true;
             removeLid.isActive = true;
-            moveInOut.isActive = true;
+            copperAnimation.isActive = true;
             Debug.Log("Game3 win");
+            Invoke("EndMicrogame", 3f);
         }
 
         //End Game
@@ -78,10 +81,15 @@ public class MicrogameManager3 : MonoBehaviour
 
     private void Lose()
     {
+        if (!isWin)
+        {
+
         countDownManager.isActive = false;
         windowAnimation.isActive = true;
         angleControl.isActive = false;
+        windowLights.isActive = true;
         Invoke("EndMicrogame", 3f);
+        }
        
     }
 

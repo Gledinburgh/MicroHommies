@@ -1,6 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowAnimation : MonoBehaviour
+public class ACAnimation : MonoBehaviour
+
 {
     public Sprite[] frames;
     public float frameDuration = 0.1f; // Adjust the duration between frames
@@ -9,9 +12,9 @@ public class WindowAnimation : MonoBehaviour
     private int currentFrame = 0;
     private float timer = 0f;
 
-    public bool isActive = false;
+    public bool isActive = true;
 
-    private bool isFirstRun = true;
+    
 
     void Start()
     {
@@ -27,8 +30,8 @@ public class WindowAnimation : MonoBehaviour
 
         if (isActive)
         {
-            
-            
+
+
             // Check if there are frames to animate
             if (frames.Length > 1)
             {
@@ -39,12 +42,9 @@ public class WindowAnimation : MonoBehaviour
                 {
                     timer = 0f;
                     currentFrame = (currentFrame + 1) % frames.Length;
-                    if (!isFirstRun && currentFrame <= 1 )
-                    {
-                        currentFrame = 2;
-                    }
+                    
                     spriteRenderer.sprite = frames[currentFrame];
-                    isFirstRun = false;
+                    
                 }
             }
 

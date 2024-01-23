@@ -40,7 +40,7 @@ void Update ()
                 
                 
                 // Get the edge position (you might need to adjust this based on your object's structure)
-                Vector2 edgePosition = transform.position + transform.up * (boxCollider.size.x / 5);
+                Vector2 edgePosition = transform.position + transform.up * (boxCollider.size.x / 8);
 
                 Debug.Log("Edge possition" + edgePosition);
                 // Apply force at the edge
