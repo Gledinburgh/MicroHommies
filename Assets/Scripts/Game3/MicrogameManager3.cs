@@ -8,6 +8,10 @@ public class MicrogameManager3 : MonoBehaviour
     private GameManager gameManager;
     private CountDownManager countDownManager;
     private AngleControl angleControl;
+    private RemoveLid removeLid;
+    private MoveInOut moveInOut;
+
+    private WindowAnimation windowAnimation;
    
 
     public bool isWin;
@@ -15,6 +19,7 @@ public class MicrogameManager3 : MonoBehaviour
     private void Awake()
     {
         gameManager = GameManager.Instance;
+     
     }
 
     private void Start()
@@ -22,12 +27,18 @@ public class MicrogameManager3 : MonoBehaviour
         timerManager = FindObjectOfType<TimerManager>();
         countDownManager = FindObjectOfType<CountDownManager>();
         angleControl = FindObjectOfType<AngleControl>();
+        removeLid = FindObjectOfType<RemoveLid>();
+        moveInOut = FindObjectOfType<MoveInOut>();
+        windowAnimation = FindObjectOfType<WindowAnimation>();
         angleControl.isActive = true;
         countDownManager.isActive = true;
+        moveInOut.isActive = false;
+        removeLid.isActive = false;
+        windowAnimation.isActive = false;
 
         if (timerManager != null)
         {
-           timerManager.OnTimerExpired.AddListener(EndMicrogame);
+           timerManager.OnTimerExpired.AddListener(Lose);
         }
         else
         {
@@ -54,9 +65,11 @@ public class MicrogameManager3 : MonoBehaviour
         {
           
             countDownManager.isActive = false;
-            timerManager.SetTime(3f);
+            timerManager.SetTime(5f);
             angleControl.isActive = false;
             isWin = true;
+            removeLid.isActive = true;
+            moveInOut.isActive = true;
             Debug.Log("Game3 win");
         }
 
@@ -65,7 +78,11 @@ public class MicrogameManager3 : MonoBehaviour
 
     private void Lose()
     {
-        EndMicrogame();
+        countDownManager.isActive = false;
+        windowAnimation.isActive = true;
+        angleControl.isActive = false;
+        Invoke("EndMicrogame", 3f);
+       
     }
 
 

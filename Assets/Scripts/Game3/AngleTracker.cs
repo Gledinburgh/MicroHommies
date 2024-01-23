@@ -3,8 +3,8 @@ using UnityEngine;
 public class AngleTracker : MonoBehaviour
 {
     private HingeJoint2D joint;
-    private bool maxAngleReached = false;
-    private bool minAngleReached = false;
+    public bool maxAngleReached = false;
+    public bool minAngleReached = false;
     private MicrogameManager3 gameManager;
 
     private void Awake()
@@ -18,6 +18,11 @@ public class AngleTracker : MonoBehaviour
 
     void Update()
     {
+
+        if (joint.jointAngle <= joint.limits.max && maxAngleReached )
+        {
+            maxAngleReached = false;
+        }
         // Check if the current angle has reached the maximum
         if (joint.jointAngle >= joint.limits.max && !maxAngleReached)
         {
@@ -32,5 +37,7 @@ public class AngleTracker : MonoBehaviour
             minAngleReached = true;
             Debug.Log("min angle reached!");
         }
+
+        
     }    
 }
