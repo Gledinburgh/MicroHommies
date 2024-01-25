@@ -32,6 +32,7 @@ public class MicrogameManager3 : MonoBehaviour
         copperAnimation = FindObjectOfType<CopperAnimation>();
         windowAnimation = FindObjectOfType<WindowAnimation>();
         windowLights = FindObjectOfType<WindowLights>();
+
         angleControl.isActive = true;
         countDownManager.isActive = true;
         copperAnimation.isActive = false;
@@ -64,12 +65,15 @@ public class MicrogameManager3 : MonoBehaviour
     public void Win()
     {
         if (isWin != true)
-        {
-          
+        {          
+            isWin = true;
+            
+            //turn off micro game mechanics
+            angleControl.isActive = false;
             countDownManager.isActive = false;
             timerManager.SetTime(5f);
-            angleControl.isActive = false;
-            isWin = true;
+
+            // Activate Win animations
             removeLid.isActive = true;
             copperAnimation.isActive = true;
             Debug.Log("Game3 win");
