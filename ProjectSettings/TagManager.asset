@@ -8,6 +8,8 @@ TagManager:
   - JesusTarget
   - Cross
   - SphereTag
+  - Bars
+  - MetalFile
   layers:
   - Default
   - TransparentFX
