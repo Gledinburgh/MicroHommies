@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class MicrogameManager5 : MonoBehaviour
 {
     private TimerManager timerManager;
     private GameManager gameManager;
-    private CountDownManager countDownManager;
-    private ArmAngleControl angleControl;
-
+   
     public bool isWin;
 
     private void Awake()
@@ -19,12 +16,8 @@ public class MicrogameManager5 : MonoBehaviour
 
     private void Start()
     {
-        timerManager = FindObjectOfType<TimerManager>();
-        countDownManager = FindObjectOfType<CountDownManager>();
-        angleControl = FindObjectOfType<ArmAngleControl>();
+        timerManager = FindObjectOfType<TimerManager>();       
        
-        angleControl.isActive = true;
-        countDownManager.isActive = true;
         
         if (timerManager != null && !isWin)
         {
@@ -39,14 +32,8 @@ public class MicrogameManager5 : MonoBehaviour
     private void EndMicrogame()
     {
         gameManager.EndMicrogame(1);
-        Debug.Log("Microgame ended. Score: " + CalculateScore());
+        Debug.Log("Microgame ended");
 
-    }
-
-    private int CalculateScore()
-    {
-        // Add logic to calculate the microgame score based on player performance
-        return 100;
     }
 
     public void Win()
@@ -56,8 +43,7 @@ public class MicrogameManager5 : MonoBehaviour
             isWin = true;
 
             //turn off micro game mechanics
-            angleControl.isActive = false;
-            countDownManager.isActive = false;
+         
             timerManager.SetTime(5f);
 
             // Activate Win animations
@@ -72,9 +58,7 @@ public class MicrogameManager5 : MonoBehaviour
     private void Lose()
     {
         if (!isWin)
-        {
-            countDownManager.isActive = false;           
-            angleControl.isActive = false;          
+        {          
             Invoke("EndMicrogame", 3f);
         }
 
