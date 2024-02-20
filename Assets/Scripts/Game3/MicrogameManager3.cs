@@ -6,6 +6,9 @@ public class MicrogameManager3 : MonoBehaviour
 {
     private TimerManager timerManager;
     private GameManager gameManager;
+    private AnimationControllerCheerLeader cheerLeader;
+    private BorderManager borderManager;
+
     private CountDownManager countDownManager;
     private AngleControl angleControl;
     private RemoveLid removeLid;
@@ -32,11 +35,16 @@ public class MicrogameManager3 : MonoBehaviour
         copperAnimation = FindObjectOfType<CopperAnimation>();
         windowAnimation = FindObjectOfType<WindowAnimation>();
         windowLights = FindObjectOfType<WindowLights>();
+        cheerLeader = FindObjectOfType<AnimationControllerCheerLeader>();
+        borderManager = FindObjectOfType<BorderManager>();
+        
+
         angleControl.isActive = true;
         countDownManager.isActive = true;
         copperAnimation.isActive = false;
         removeLid.isActive = false;
         windowAnimation.isActive = false;
+        cheerLeader.isIdle = true;
 
         if (timerManager != null && !isWin)
         {
@@ -64,16 +72,21 @@ public class MicrogameManager3 : MonoBehaviour
     public void Win()
     {
         if (isWin != true)
-        {
-          
-            countDownManager.isActive = false;
-            timerManager.SetTime(5f);
-            angleControl.isActive = false;
+        {          
             isWin = true;
+            
+            //turn off micro game mechanics
+            angleControl.isActive = false;
+            countDownManager.isActive = false;
+            cheerLeader.isWin = true;
+            borderManager.isWin = true;
+            
+
+            // Activate Win animations
             removeLid.isActive = true;
             copperAnimation.isActive = true;
             Debug.Log("Game3 win");
-            Invoke("EndMicrogame", 3f);
+            Invoke("EndMicrogame", 5f);
         }
 
         //End Game
@@ -88,6 +101,9 @@ public class MicrogameManager3 : MonoBehaviour
         windowAnimation.isActive = true;
         angleControl.isActive = false;
         windowLights.isActive = true;
+        cheerLeader.isLose = true;
+        borderManager.isLose = true;
+
         Invoke("EndMicrogame", 3f);
         }
        

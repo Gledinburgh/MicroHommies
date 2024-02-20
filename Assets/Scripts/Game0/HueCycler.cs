@@ -1,28 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HueCycler : MonoBehaviour
 {
-    private SpriteRenderer targetSpriteRenderer;
-    public SpriteRenderer cross1;
-    public SpriteRenderer cross2;
+    public List<SpriteRenderer> targetRenderers;
+    public GameObject targetParent;
     public bool isActive = false;
-    private float currentHue = 0f; // Initial hue value
+    public bool isFirstCycle = true;
+    public float startHue = 100f; // Starting hue value
+    public float endHue = 180f; // Ending hue value
+    public float currentHue = 160f; // Ending hue value
+
+    public float hueIncrement = 50f; // Change the increment value to control cycling speed
 
     void Start()
     {
-       
-        
+        if (targetParent != null)
+        {
+            for (int i = 0; i < targetParent.transform.childCount; i++)
+            {
+                Transform child = targetParent.transform.GetChild(i);
+                SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+                targetRenderers.Add(spriteRenderer);
+            } 
+        }
+
+        if (targetRenderers.Count < 1)
+        {
+            Debug.LogError("No renderers are assigned to the Hue Cycler");
+        }
     }
 
     void Update()
     {
+
+        if (isActive && isFirstCycle)
+        {
+            currentHue = startHue;
+            isFirstCycle = false;
+        }
         // Check for input or trigger hue cycling based on your game logic
         if (isActive == true)
-
         {
-            CycleHue(cross1);
-            CycleHue(cross2);
+            foreach (SpriteRenderer target in targetRenderers)
+            {
+            if (target != null) CycleHue(target);
 
+            }
+            
+            
         }
     }
 
@@ -31,8 +57,14 @@ public class HueCycler : MonoBehaviour
         // Check if there's a SpriteRenderer
         if (sprite != null)
         {
-            // Cycle through hues
-            currentHue = (currentHue + 30f) % 360f; // Change the increment value to control cycling speed
+            // Cycle through hues between startHue and endHue
+            currentHue = (currentHue + hueIncrement * Time.deltaTime) % 360f;
+            if (currentHue > endHue || currentHue < startHue)
+            {
+                hueIncrement *= -1;
+            }
+
+
 
             // Convert HSL to RGB and set the color
             Color newColor = HSLToRGB(currentHue / 360f, 1f, 0.5f); // Constant saturation and lightness
@@ -44,6 +76,7 @@ public class HueCycler : MonoBehaviour
         }
     }
 
+    // Convert HSL to RGB
     // Convert HSL to RGB
     Color HSLToRGB(float h, float s, float l)
     {
@@ -77,4 +110,6 @@ public class HueCycler : MonoBehaviour
         if (t < 2f / 3f) return p + (q - p) * (2f / 3f - t) * 6f;
         return p;
     }
+
+
 }

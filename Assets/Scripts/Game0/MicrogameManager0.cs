@@ -7,9 +7,10 @@ public class MicrogameManager0 : MonoBehaviour
 {
     private TimerManager timerManager;
     private GameManager gameManager;
-    private CountDownManager countDownManager;
-    private HueCycler hueCycler;
+    //private CountDownManager countDownManager;
+    public HueCycler hueCycler;
     private DraggableObject draggableObject;
+    public BorderManager borderManager;
 
     public bool isWin;
 
@@ -21,11 +22,11 @@ public class MicrogameManager0 : MonoBehaviour
     private void Start()
     {
         timerManager = FindObjectOfType<TimerManager>();
-        countDownManager = FindObjectOfType<CountDownManager>();
-        hueCycler = FindObjectOfType<HueCycler>();
+        //countDownManager = FindObjectOfType<CountDownManager>();
+        //hueCycler = FindObjectOfType<HueCycler>();
         draggableObject = FindObjectOfType<DraggableObject>();
 
-        countDownManager.isActive = true;
+        //countDownManager.isActive = true;
 
         if (timerManager != null)
         {
@@ -55,10 +56,13 @@ public class MicrogameManager0 : MonoBehaviour
         if (isWin != true)
         {
         draggableObject.isActive = false;
-        countDownManager.isActive = false;
-        timerManager.SetTime(3f);
+        //countDownManager.isActive = false;
+        //timerManager.SetTime(3f);
         hueCycler.isActive = true;
         isWin = true;
+        borderManager.isWin = true;
+        Invoke("EndMicrogame", 3);
+
         }
         
         //End Game
