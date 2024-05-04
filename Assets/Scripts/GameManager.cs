@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,8 +6,12 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     private string currentSceneName;
+    private string[] microgameScenes;
+    public int selectedGameIndex = 0;
+
 
     public int totalScore = 0;
+    public bool isStoryMode = true;
 
     public static GameManager Instance
     {
@@ -56,7 +61,8 @@ public class GameManager : MonoBehaviour
 
 private void Start()
     {
-        LoadMainScene();
+        GetAllMicrogameScenes();
+        LoadShortScene();
     }
 
     public void LoadMainScene()
@@ -64,6 +70,12 @@ private void Start()
        // loads the main menu scene where the player can select microgames.
        SceneManager.LoadScene("MainScene");
        currentSceneName = "MainScene";
+    }
+
+    public void LoadShortScene()
+    {
+        SceneManager.LoadScene("IntroScene");
+        currentSceneName = "IntroScene";
     }
 
     public void StartMicrogame(string microgameSceneName)
@@ -80,7 +92,15 @@ private void Start()
         Debug.Log("SceneName To End" + currentSceneName);
         totalScore += microgameScore;
         SceneManager.UnloadSceneAsync(currentSceneName);
+        if (isStoryMode == false)
+        {
         LoadMainScene();
+        }
+        else
+        {
+            SelectNextGame();
+            StartMicrogame(currentSceneName);            
+        }
     }
 
     public int GetTotalScore()
@@ -88,6 +108,34 @@ private void Start()
         //method allows other scripts to retrieve the total score.
         return totalScore;
     }
- 
+
+    private void GetAllMicrogameScenes()
+    {
+        int sceneCount = SceneManager.sceneCountInBuildSettings;
+        microgameScenes = new string[sceneCount];
+
+        for (int i = 0; i < sceneCount; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+
+            // Check if the scene is a microgame scene (customize this condition based on your scene naming)
+            if (sceneName.StartsWith("Microgame"))
+            {
+                microgameScenes[i] = sceneName;
+            }
+        }
+
+        // Remove null or empty entries
+        microgameScenes = microgameScenes.Where(s => !string.IsNullOrEmpty(s)).ToArray();
+    }
+
+    void SelectNextGame()
+    {
+        selectedGameIndex = (selectedGameIndex + 1);
+        currentSceneName = microgameScenes[selectedGameIndex];
+    }
+
 }
 

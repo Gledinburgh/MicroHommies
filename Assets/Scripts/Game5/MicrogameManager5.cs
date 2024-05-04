@@ -5,7 +5,9 @@ public class MicrogameManager5 : MonoBehaviour
 {
     private TimerManager timerManager;
     private GameManager gameManager;
-   
+    private BorderManager borderManager;
+
+
     public bool isWin;
 
     private void Awake()
@@ -16,9 +18,11 @@ public class MicrogameManager5 : MonoBehaviour
 
     private void Start()
     {
-        timerManager = FindObjectOfType<TimerManager>();       
-       
-        
+        timerManager = FindObjectOfType<TimerManager>();
+        borderManager = FindObjectOfType<BorderManager>();
+
+
+
         if (timerManager != null && !isWin)
         {
             timerManager.OnTimerExpired.AddListener(Lose);
@@ -43,11 +47,11 @@ public class MicrogameManager5 : MonoBehaviour
             isWin = true;
 
             //turn off micro game mechanics
-         
-            timerManager.SetTime(5f);
+            borderManager.isWin = true;
+
 
             // Activate Win animations
-            
+
             Debug.Log("Game5 win");
             Invoke("EndMicrogame", 3f);
         }
