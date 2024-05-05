@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2017f5d901b517943a5bbbe3e9d924e9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Microgame1.unity
     guid: e58d9fcb62fa7cf4387869fe4ac5dcd0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Microgame2.unity
     guid: fc6a970716e321a4eb115f101162b13a
   - enabled: 0
@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Microgame0.unity
     guid: 2efaba736a250f340a8814f08c8b46d2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Microgame5.unity
     guid: 37a87a0ea26881d4c802c14a351833c1
   - enabled: 1
