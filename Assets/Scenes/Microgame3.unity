@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c354f1707953744fb8ef71cb4da5675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTime: Infinity
+  startingTime: 3
   currentTime: 0
   OnTimerExpired:
     m_PersistentCalls:
