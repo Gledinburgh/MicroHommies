@@ -16,20 +16,30 @@ public class GameFiveGoalTracker : MonoBehaviour
     private Vector3 initialMousePosition;
     
     public bool isActive = true;
-    
+
+    public float minRange;
+    public float maxRange;
 
     public float minGoal = -1.5f;
     public float maxGoal = 2.5f;
 
     private SpriteRenderer sprite;
 
+    public GoalTimer goalTimer;
+
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+
+
     }
 
     void Update()
     {
+
+        //if mouse is not down
+          //find if on left or right side of the goal.
+          //simulate mouse drag in that direction.
 
         if (isActive)
         {
@@ -40,7 +50,7 @@ public class GameFiveGoalTracker : MonoBehaviour
             else if (Input.GetMouseButtonUp(0))
             {
                 // Reset the initial mouse position when dragging stops
-                initialMousePosition = Vector3.zero;
+                initialMousePosition = Vector3.zero;                
             }
 
             if (Input.GetMouseButton(0) && initialMousePosition != Vector3.zero)
@@ -58,9 +68,20 @@ public class GameFiveGoalTracker : MonoBehaviour
                 // Update the initial mouse position for the next frame
                 initialMousePosition = Input.mousePosition;
             }
-                
 
+            //if mouse is not down
+            //find if on left or right side of the goal.
+            //simulate mouse drag in that direction.
+            else
+            {
+                if ((goalMeasurement >= minRange && goalMeasurement <= maxRange))
+                {
+                transform.RotateAround(transform.position, Vector3.forward, .5f);
+                Debug.Log("No MOuse");
+                }
+            }
         }
+
 
         UpdateGoalTracker();
 
@@ -75,6 +96,9 @@ public class GameFiveGoalTracker : MonoBehaviour
         {
             Debug.Log("Goal Met");
             sprite.color = Color.green;
+            goalTimer.conditionsMet = true;
+           
+            
         }
 
         else
@@ -82,9 +106,10 @@ public class GameFiveGoalTracker : MonoBehaviour
             Debug.Log("Goal not Met");
                 
             sprite.color = Color.white;
+            goalTimer.conditionsMet = false;
         }
 
-
+        //Timer function
     }
 
     float NormalizeAngle(float angle)
@@ -94,5 +119,17 @@ public class GameFiveGoalTracker : MonoBehaviour
             angle -= 360f;
         }
         return angle;
+    }
+
+    private void GoalTimer()
+    {
+      //If In range
+        //If already in range
+          //continue timer
+        //If newly in range
+          //start timer
+    //If not in range
+     //restart timer to zero
+       
     }
 }
